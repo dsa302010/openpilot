@@ -257,6 +257,8 @@ class CarController(CarControllerBase):
     # we can spam can to cancel the system even if we are using lat only control
     if (self.frame % 3 == 0 and self.CP.openpilotLongitudinalControl) or pcm_cancel_cmd:
       lead = hud_control.leadVisible or CS.out.vEgo < 12.  # at low speed we always assume the lead is present so ACC can be engaged
+      # when stopping, send -2.5 raw acceleration immediately to prevent vehicle from creeping, else send actuators.accel
+      accel_raw = -2.5 if stopping else actuators.accel
       reverse_acc = 2 if self._reverse_acc_change else 1
 
       # Press distance button until we are at the correct bar length. Only change while enabled to avoid skipping startup popup
