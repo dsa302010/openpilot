@@ -129,7 +129,7 @@ class CarInterface(CarInterfaceBase):
       tune.kpV = [0.0]
       tune.kiV = [0.5]
       ret.vEgoStopping = 0.11
-      ret.vEgoStarting = 0.18
+      ret.vEgoStarting = 0.25
       ret.stoppingDecelRate = 0.03  # reach stopping target smoothly
     else:
       tune.kiBP = [0., 5., 35.]
