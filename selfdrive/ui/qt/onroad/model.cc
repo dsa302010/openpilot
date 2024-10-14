@@ -11,7 +11,7 @@ constexpr float MAX_DRAW_DISTANCE = 100.0;
 struct LeadcarLockon {
   float x,y,d,a,lxt,lxf,lockOK;
 };
-#define LeadcarLockon_MAX 5
+#define LeadcarLockon_MAX 2
 LeadcarLockon leadcar_lockon[LeadcarLockon_MAX]; //この配列0番を推論1番枠と呼ぶことにする。
 
 void ModelRenderer::drawLockon(QPainter &painter, const cereal::ModelDataV2::LeadDataV3::Reader &lead_data, const QPointF &vd , int num  /*使っていない , size_t leads_num , const cereal::RadarState::LeadData::Reader &lead0, const cereal::RadarState::LeadData::Reader &lead1 */, const QRect &surface_rect) {

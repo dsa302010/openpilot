@@ -1,6 +1,6 @@
 from math import atan2
 
-from cereal import car
+from cereal import car, log
 import cereal.messaging as messaging
 from openpilot.selfdrive.selfdrived.events import Events
 from openpilot.common.numpy_fast import interp
@@ -9,10 +9,12 @@ from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.common.stat_live import RunningStatFilter
 from openpilot.common.transformations.camera import DEVICE_CAMERAS
 
+
 from openpilot.common.params import Params
 mem_params = Params("/dev/shm/params")
 
-EventName = car.OnroadEvent.EventName
+
+EventName = log.OnroadEvent.EventName
 
 # ******************************************************************************************
 #  NOTE: To fork maintainers.
