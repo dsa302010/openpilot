@@ -15,7 +15,7 @@ from openpilot.system import micd
 
 SAMPLE_RATE = 48000
 SAMPLE_BUFFER = 4096 # (approx 100ms)
-MAX_VOLUME = 1.0
+MAX_VOLUME = 0.2
 MIN_VOLUME = 0.1
 SELFDRIVE_STATE_TIMEOUT = 5 # 5 seconds
 FILTER_DT = 1. / (micd.SAMPLE_RATE / micd.FFT_SAMPLES)
@@ -30,8 +30,8 @@ sound_list: dict[int, tuple[str, int | None, float]] = {
   # AudibleAlert, file name, play count (none for infinite)
   AudibleAlert.engage: ("engage.wav", 1, MAX_VOLUME),
   AudibleAlert.engageBrakehold: ("engage_brakehold.wav", 1, MAX_VOLUME),
-  AudibleAlert.engageMads: ("engage_mads.wav", 1, MAX_VOLUME),
-  AudibleAlert.disengageMads: ("disengage_mads.wav", 1, MAX_VOLUME),
+  #AudibleAlert.engageMads: ("engage_mads.wav", 1, MAX_VOLUME),
+  #AudibleAlert.disengageMads: ("disengage_mads.wav", 1, MAX_VOLUME),
   AudibleAlert.disengage: ("disengage.wav", 1, MAX_VOLUME),
   AudibleAlert.refuse: ("refuse.wav", 1, MAX_VOLUME),
 
