@@ -18,15 +18,15 @@ from openpilot.common.swaglog import cloudlog
 
 LON_MPC_STEP = 0.2  # first step is 0.2s
 A_CRUISE_MIN = -1.2
-# A_CRUISE_MAX_VALS = [1.6, 1.2, 0.8, 0.6]
-# A_CRUISE_MAX_BP = [0., 10.0, 25., 40.]
+A_CRUISE_MAX_VALS = [1.1, 0.8, 0.4, 0.2]
+A_CRUISE_MAX_BP = [0., 10.0, 25., 40.]
 CONTROL_N_T_IDX = ModelConstants.T_IDXS[:CONTROL_N]
 ALLOW_THROTTLE_THRESHOLD = 0.5
 ACCEL_LIMIT_MARGIN = 0.05
 
 # cgw smooth long tune, dragonpilot
-A_CRUISE_MAX_VALS = [3.0, 1.7, 1.3, 0.7, 0.6, 0.44, 0.32, 0.22, 0.16, 0.0078]
-A_CRUISE_MAX_BP =   [0.,  3,   6.,  8.,  11., 15.,  20.,  25.,  30.,  55.]
+# A_CRUISE_MAX_VALS = [3.0, 1.7, 1.3, 0.7, 0.6, 0.44, 0.32, 0.22, 0.16, 0.0078]
+# A_CRUISE_MAX_BP =   [0.,  3,   6.,  8.,  11., 15.,  20.,  25.,  30.,  55.]
 A_CRUISE_MIN_VALS = [-0.65,  -0.60,  -0.70, -0.70,  -0.65, -0.65]
 A_CRUISE_MIN_BP =   [0.,     0.07,   10.,   20.,    30.,   55.]
 
