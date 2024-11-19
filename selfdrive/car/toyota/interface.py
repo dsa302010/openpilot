@@ -151,9 +151,9 @@ class CarInterface(CarInterfaceBase):
     if candidate in TSS2_CAR:
       tune.kpV = [0.0]
       tune.kiV = [0.5]
-      ret.vEgoStopping = 0.25
+      ret.vEgoStopping = 0.11
       ret.vEgoStarting = 0.25
-      ret.stoppingDecelRate = 0.3  # reach stopping target smoothly
+      ret.stoppingDecelRate = 0.03  # reach stopping target smoothly
 
       # Since we compensate for imprecise acceleration in carcontroller and error correct on aEgo, we can avoid using gains
       if ret.flags & ToyotaFlags.RAISED_ACCEL_LIMIT:
