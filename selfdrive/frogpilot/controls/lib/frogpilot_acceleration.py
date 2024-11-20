@@ -8,7 +8,7 @@ A_CRUISE_MIN_SPORT = A_CRUISE_MIN * 2
 
                     #KM/公里 = [0.0,  17,  35, 55.,  72,  90, 143.]
 A_CRUISE_MAX_BP_CUSTOM =       [0.0,  5., 10., 15., 20., 25., 40.]
-A_CRUISE_MAX_VALS_ECO =        [1.15, 1.13, 0.83, 0.75, 0.7, 0.4, 0.1]
+A_CRUISE_MAX_VALS_ECO =        [1.14, 1.13, 0.83, 0.75, 0.7, 0.4, 0.1]
 A_CRUISE_MAX_VALS_SPORT =      [1.2, 1.16, 0.9, 0.85, 0.8, 0.45, 0.1]
 A_CRUISE_MAX_VALS_SPORT_PLUS = [1.3, 1.2, 1.0, 0.95, 0.9, 0.5, 0.1]
                        # MPH = [0.0,  11,  22,  34,  45,  56,  89]
