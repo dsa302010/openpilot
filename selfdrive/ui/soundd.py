@@ -55,7 +55,8 @@ sound_list: dict[int, tuple[str, int | None, float]] = {
   AudibleAlert.nessie: ("nessie.wav", 1, MAX_VOLUME),
   AudibleAlert.noice: ("noice.wav", 1, MAX_VOLUME),
   AudibleAlert.promptRepeat: ("prompt_repeat.wav", None, MAX_VOLUME),
-  AudibleAlert.thisIsFine: ("this_is_fine.wav", None, MAX_VOLUME),
+  AudibleAlert.startup: ("startup.wav", 1, MAX_VOLUME),
+  AudibleAlert.thisIsFine: ("this_is_fine.wav", 1, MAX_VOLUME),
   AudibleAlert.uwu: ("uwu.wav", 1, MAX_VOLUME),
 }
 
@@ -121,6 +122,8 @@ class Soundd:
         except FileNotFoundError:
           if filename == "prompt_repeat.wav":
             filename = "prompt.wav"
+          if filename == "startup.wav":
+            filename = "engage.wav"
           wavefile = wave.open(BASEDIR + "/selfdrive/assets/sounds/" + filename, 'r')
 
       assert wavefile.getnchannels() == 1

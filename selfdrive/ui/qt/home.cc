@@ -252,11 +252,7 @@ void OffroadHome::hideEvent(QHideEvent *event) {
 }
 
 void OffroadHome::refresh() {
-  QString model = QString::fromStdString(params.get("ModelName")).remove(QRegularExpression("[🗺️👀📡]")).remove("(Default)").trimmed();
-
-  if (params.getBool("CustomizationLevelConfirmed") && params.getInt("CustomizationLevel") != 2) {
-    model = QString::fromStdString(params.get("DefaultModelName")).trimmed();
-  }
+  QString model = uiState()->scene.model_name.remove(QRegularExpression(" \\(Default\\)"));
 
   if (uiState()->scene.model_randomizer) {
     model = "Mystery Model 👻";

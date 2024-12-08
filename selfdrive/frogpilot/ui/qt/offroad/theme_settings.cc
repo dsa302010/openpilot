@@ -113,11 +113,11 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           }
         } else if (id == 1) {
           if (colorDownloading) {
-            paramsMemory.putBool("CancelThemeDownload", true);
+            params_memory.putBool("CancelThemeDownload", true);
             cancellingDownload = true;
 
             QTimer::singleShot(2000, [=]() {
-              paramsMemory.putBool("CancelThemeDownload", false);
+              params_memory.putBool("CancelThemeDownload", false);
               cancellingDownload = false;
               colorDownloading = false;
               themeDownloading = false;
@@ -128,9 +128,9 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
             if (!colorSchemeToDownload.isEmpty()) {
               QString convertedColorScheme = formatColorNameForStorage(colorSchemeToDownload);
-              paramsMemory.put("ColorToDownload", convertedColorScheme.toStdString());
+              params_memory.put("ColorToDownload", convertedColorScheme.toStdString());
               downloadStatusLabel->setText("Downloading...");
-              paramsMemory.put("ThemeDownloadProgress", "Downloading...");
+              params_memory.put("ThemeDownloadProgress", "Downloading...");
               colorDownloading = true;
               themeDownloading = true;
 
@@ -143,7 +143,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           if (!colorSchemeToSelect.isEmpty()) {
             params.put("CustomColors", formatColorNameForStorage(colorSchemeToSelect).toStdString());
             manageCustomColorsBtn->setValue(colorSchemeToSelect);
-            updateFrogPilotToggles();
           }
         }
       });
@@ -241,11 +240,11 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           }
         } else if (id == 1) {
           if (distanceIconDownloading) {
-            paramsMemory.putBool("CancelThemeDownload", true);
+            params_memory.putBool("CancelThemeDownload", true);
             cancellingDownload = true;
 
             QTimer::singleShot(2000, [=]() {
-              paramsMemory.putBool("CancelThemeDownload", false);
+              params_memory.putBool("CancelThemeDownload", false);
               cancellingDownload = false;
               distanceIconDownloading = false;
               themeDownloading = false;
@@ -256,9 +255,9 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
             if (!iconPackToDownload.isEmpty()) {
               QString convertedIconPack = formatIconNameForStorage(iconPackToDownload);
-              paramsMemory.put("DistanceIconToDownload", convertedIconPack.toStdString());
+              params_memory.put("DistanceIconToDownload", convertedIconPack.toStdString());
               downloadStatusLabel->setText("Downloading...");
-              paramsMemory.put("ThemeDownloadProgress", "Downloading...");
+              params_memory.put("ThemeDownloadProgress", "Downloading...");
               distanceIconDownloading = true;
               themeDownloading = true;
 
@@ -271,7 +270,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           if (!iconPackToSelect.isEmpty()) {
             params.put("CustomDistanceIcons", formatIconNameForStorage(iconPackToSelect).toStdString());
             manageDistanceIconsBtn->setValue(iconPackToSelect);
-            updateFrogPilotToggles();
           }
         }
       });
@@ -370,11 +368,11 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           }
         } else if (id == 1) {
           if (iconDownloading) {
-            paramsMemory.putBool("CancelThemeDownload", true);
+            params_memory.putBool("CancelThemeDownload", true);
             cancellingDownload = true;
 
             QTimer::singleShot(2000, [=]() {
-              paramsMemory.putBool("CancelThemeDownload", false);
+              params_memory.putBool("CancelThemeDownload", false);
               cancellingDownload = false;
               iconDownloading = false;
               themeDownloading = false;
@@ -385,9 +383,9 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
             if (!iconPackToDownload.isEmpty()) {
               QString convertedIconPack = formatIconNameForStorage(iconPackToDownload);
-              paramsMemory.put("IconToDownload", convertedIconPack.toStdString());
+              params_memory.put("IconToDownload", convertedIconPack.toStdString());
               downloadStatusLabel->setText("Downloading...");
-              paramsMemory.put("ThemeDownloadProgress", "Downloading...");
+              params_memory.put("ThemeDownloadProgress", "Downloading...");
               iconDownloading = true;
               themeDownloading = true;
 
@@ -400,7 +398,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           if (!iconPackToSelect.isEmpty()) {
             params.put("CustomIcons", formatIconNameForStorage(iconPackToSelect).toStdString());
             manageCustomIconsBtn->setValue(iconPackToSelect);
-            updateFrogPilotToggles();
           }
         }
       });
@@ -465,12 +462,12 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
             availableSignals << formatSignalName(dirInfo.fileName());
           }
         }
-        availableSignals.append("Stock");
+        availableSignals.append("None");
         std::sort(availableSignals.begin(), availableSignals.end());
 
         if (id == 0) {
           QStringList customSignalsList = availableSignals;
-          customSignalsList.removeAll("Stock");
+          customSignalsList.removeAll("None");
           customSignalsList.removeAll(currentSignal);
 
           QString signalPackToDelete = MultiOptionDialog::getSelection(tr("Select a signal pack to delete"), customSignalsList, "", this);
@@ -499,11 +496,11 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           }
         } else if (id == 1) {
           if (signalDownloading) {
-            paramsMemory.putBool("CancelThemeDownload", true);
+            params_memory.putBool("CancelThemeDownload", true);
             cancellingDownload = true;
 
             QTimer::singleShot(2000, [=]() {
-              paramsMemory.putBool("CancelThemeDownload", false);
+              params_memory.putBool("CancelThemeDownload", false);
               cancellingDownload = false;
               signalDownloading = false;
               themeDownloading = false;
@@ -514,9 +511,9 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
             if (!signalPackToDownload.isEmpty()) {
               QString convertedSignalPack = formatSignalNameForStorage(signalPackToDownload);
-              paramsMemory.put("SignalToDownload", convertedSignalPack.toStdString());
+              params_memory.put("SignalToDownload", convertedSignalPack.toStdString());
               downloadStatusLabel->setText("Downloading...");
-              paramsMemory.put("ThemeDownloadProgress", "Downloading...");
+              params_memory.put("ThemeDownloadProgress", "Downloading...");
               signalDownloading = true;
               themeDownloading = true;
 
@@ -529,7 +526,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           if (!signalPackToSelect.isEmpty()) {
             params.put("CustomSignals", formatSignalNameForStorage(signalPackToSelect).toStdString());
             manageCustomSignalsBtn->setValue(signalPackToSelect);
-            updateFrogPilotToggles();
           }
         }
       });
@@ -628,11 +624,11 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           }
         } else if (id == 1) {
           if (soundDownloading) {
-            paramsMemory.putBool("CancelThemeDownload", true);
+            params_memory.putBool("CancelThemeDownload", true);
             cancellingDownload = true;
 
             QTimer::singleShot(2000, [=]() {
-              paramsMemory.putBool("CancelThemeDownload", false);
+              params_memory.putBool("CancelThemeDownload", false);
               cancellingDownload = false;
               soundDownloading = false;
               themeDownloading = false;
@@ -643,9 +639,9 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
             if (!soundSchemeToDownload.isEmpty()) {
               QString convertedSoundScheme = formatSoundNameForStorage(soundSchemeToDownload);
-              paramsMemory.put("SoundToDownload", convertedSoundScheme.toStdString());
+              params_memory.put("SoundToDownload", convertedSoundScheme.toStdString());
               downloadStatusLabel->setText("Downloading...");
-              paramsMemory.put("ThemeDownloadProgress", "Downloading...");
+              params_memory.put("ThemeDownloadProgress", "Downloading...");
               soundDownloading = true;
               themeDownloading = true;
 
@@ -658,7 +654,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           if (!soundSchemeToSelect.isEmpty()) {
             params.put("CustomSounds", formatSoundNameForStorage(soundSchemeToSelect).toStdString());
             manageCustomSoundsBtn->setValue(soundSchemeToSelect);
-            updateFrogPilotToggles();
           }
         }
       });
@@ -757,11 +752,11 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           }
         } else if (id == 1) {
           if (wheelDownloading) {
-            paramsMemory.putBool("CancelThemeDownload", true);
+            params_memory.putBool("CancelThemeDownload", true);
             cancellingDownload = true;
 
             QTimer::singleShot(2000, [=]() {
-              paramsMemory.putBool("CancelThemeDownload", false);
+              params_memory.putBool("CancelThemeDownload", false);
               cancellingDownload = false;
               wheelDownloading = false;
               themeDownloading = false;
@@ -772,9 +767,9 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
             if (!wheelToDownload.isEmpty()) {
               QString convertedImage = formatWheelNameForStorage(wheelToDownload);
-              paramsMemory.put("WheelToDownload", convertedImage.toStdString());
+              params_memory.put("WheelToDownload", convertedImage.toStdString());
               downloadStatusLabel->setText("Downloading...");
-              paramsMemory.put("ThemeDownloadProgress", "Downloading...");
+              params_memory.put("ThemeDownloadProgress", "Downloading...");
               themeDownloading = true;
               wheelDownloading = true;
 
@@ -787,7 +782,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
           if (!imageToSelect.isEmpty()) {
             params.put("WheelIcon", formatWheelNameForStorage(imageToSelect).toStdString());
             manageWheelIconsBtn->setValue(imageToSelect);
-            updateFrogPilotToggles();
           }
         }
       });
@@ -831,18 +825,16 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
         } else if (id == 2) {
           QString newTop = InputDialog::getText(tr("Enter the text for the top half"), this, tr("Characters: 0/%1").arg(maxLengthTop), false, -1, currentTop, maxLengthTop).trimmed();
           if (newTop.length() > 0) {
-            params.putNonBlocking("StartupMessageTop", newTop.toStdString());
+            params.put("StartupMessageTop", newTop.toStdString());
             QString newBottom = InputDialog::getText(tr("Enter the text for the bottom half"), this, tr("Characters: 0/%1").arg(maxLengthBottom), false, -1, currentBottom, maxLengthBottom).trimmed();
             if (newBottom.length() > 0) {
-              params.putNonBlocking("StartupMessageBottom", newBottom.toStdString());
+              params.put("StartupMessageBottom", newBottom.toStdString());
             }
           }
         } else if (id == 3) {
           params.remove("StartupMessageTop");
           params.remove("StartupMessageBottom");
         }
-
-        updateFrogPilotToggles();
       });
       themeToggle = startupAlertButton;
 
@@ -852,8 +844,6 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
 
     addItem(themeToggle);
     toggles[param] = themeToggle;
-
-    makeConnections(themeToggle);
 
     if (FrogPilotParamManageControl *frogPilotManageToggle = qobject_cast<FrogPilotParamManageControl*>(themeToggle)) {
       QObject::connect(frogPilotManageToggle, &FrogPilotParamManageControl::manageButtonClicked, this, &FrogPilotThemesPanel::openParentToggle);
@@ -876,10 +866,10 @@ void FrogPilotThemesPanel::showEvent(QShowEvent *event) {
   soundsDownloaded = params.get("DownloadableSounds").empty();
   wheelsDownloaded = params.get("DownloadableWheels").empty();
 
-  customizationLevel = parent->customizationLevel;
+  frogpilotToggleLevels = parent->frogpilotToggleLevels;
+  tuningLevel = parent->tuningLevel;
 
-  toggles["RandomEvents"]->setVisible(customizationLevel != 0);
-  toggles["StartupAlert"]->setVisible(customizationLevel == 2);
+  hideToggles();
 }
 
 void FrogPilotThemesPanel::updateState(const UIState &s) {
@@ -887,11 +877,9 @@ void FrogPilotThemesPanel::updateState(const UIState &s) {
     return;
   }
 
-  uiState()->scene.keep_screen_on = personalizeOpenpilotOpen && themeDownloading;
-
   if (personalizeOpenpilotOpen) {
     if (themeDownloading) {
-      QString progress = QString::fromStdString(paramsMemory.get("ThemeDownloadProgress"));
+      QString progress = QString::fromStdString(params_memory.get("ThemeDownloadProgress"));
       bool downloadFailed = progress.contains(QRegularExpression("cancelled|exists|Failed|offline", QRegularExpression::CaseInsensitiveOption));
 
       if (progress != "Downloading...") {
@@ -904,7 +892,7 @@ void FrogPilotThemesPanel::updateState(const UIState &s) {
             downloadStatusLabel->setText("Idle");
           }
         });
-        paramsMemory.remove("ThemeDownloadProgress");
+        params_memory.remove("ThemeDownloadProgress");
         colorDownloading = false;
         distanceIconDownloading = false;
         iconDownloading = false;
@@ -958,7 +946,7 @@ void FrogPilotThemesPanel::showToggles(const std::set<QString> &keys) {
   setUpdatesEnabled(false);
 
   for (auto &[key, toggle] : toggles) {
-    toggle->setVisible(keys.find(key) != keys.end());
+    toggle->setVisible(keys.find(key) != keys.end() && tuningLevel >= frogpilotToggleLevels[key].toDouble());
   }
 
   setUpdatesEnabled(true);
@@ -973,11 +961,8 @@ void FrogPilotThemesPanel::hideToggles() {
   for (auto &[key, toggle] : toggles) {
     bool subToggles = customThemeKeys.find(key) != customThemeKeys.end();
 
-    toggle->setVisible(!subToggles);
+    toggle->setVisible(!subToggles && tuningLevel >= frogpilotToggleLevels[key].toDouble());
   }
-
-  toggles["RandomEvents"]->setVisible(customizationLevel != 0);
-  toggles["StartupAlert"]->setVisible(customizationLevel == 2);
 
   setUpdatesEnabled(true);
   update();

@@ -22,8 +22,8 @@ class SpeedLimitController:
     self.update_map_speed_limit(v_ego, frogpilot_toggles)
     max_speed_limit = v_cruise if enabled else 0
 
-    self.speed_limit = self.get_speed_limit(dashboard_speed_limit, max_speed_limit, navigation_speed_limit, frogpilot_toggles)
     self.offset = self.get_offset(frogpilot_toggles)
+    self.speed_limit = self.get_speed_limit(dashboard_speed_limit, max_speed_limit, navigation_speed_limit, frogpilot_toggles)
     self.desired_speed_limit = self.get_desired_speed_limit()
 
     self.experimental_mode = frogpilot_toggles.slc_fallback_experimental_mode and self.speed_limit == 0
@@ -85,8 +85,12 @@ class SpeedLimitController:
         self.source = min(filtered_limits, key=filtered_limits.get)
         return filtered_limits[self.source]
 
-      for priority in [frogpilot_toggles.speed_limit_priority1, frogpilot_toggles.speed_limit_priority2, frogpilot_toggles.speed_limit_priority3]:
-        if priority in filtered_limits:
+      for priority in [
+        frogpilot_toggles.speed_limit_priority1,
+        frogpilot_toggles.speed_limit_priority2,
+        frogpilot_toggles.speed_limit_priority3
+      ]:
+        if priority is not None and priority in filtered_limits:
           self.source = priority
           return filtered_limits[priority]
 
@@ -96,6 +100,7 @@ class SpeedLimitController:
       return self.previous_speed_limit
 
     if frogpilot_toggles.slc_fallback_set_speed:
+      self.offset = 0
       return max_speed_limit
 
     return 0

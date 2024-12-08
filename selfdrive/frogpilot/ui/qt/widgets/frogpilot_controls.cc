@@ -5,8 +5,8 @@
 #include "selfdrive/ui/ui.h"
 
 void updateFrogPilotToggles() {
-  static Params paramsMemory{"/dev/shm/params"};
-  paramsMemory.putBool("FrogPilotTogglesUpdated", true);
+  static Params params_memory{"/dev/shm/params"};
+  params_memory.putBool("FrogPilotTogglesUpdated", true);
 }
 
 QColor loadThemeColors(const QString &colorKey, bool clearCache) {
@@ -14,24 +14,18 @@ QColor loadThemeColors(const QString &colorKey, bool clearCache) {
 
   if (clearCache) {
     cachedColorData = QJsonObject();
-    return QColor();
-  }
-
-  if (cachedColorData.isEmpty()) {
     QFile file("../frogpilot/assets/active_theme/colors/colors.json");
-    if (file.exists() && file.open(QIODevice::ReadOnly)) {
-      QJsonParseError parseError;
-      QByteArray fileData = file.readAll();
-      QJsonDocument doc = QJsonDocument::fromJson(fileData, &parseError);
 
-      if (parseError.error == QJsonParseError::NoError && doc.isObject()) {
-        cachedColorData = doc.object();
-      }
+    while (!file.exists()) {
+      util::sleep_for(100);
     }
-  }
 
-  if (!cachedColorData.contains(colorKey)) {
-    return QColor();
+    file.open(QIODevice::ReadOnly);
+
+    QByteArray fileData = file.readAll();
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+
+    cachedColorData = doc.object();
   }
 
   QJsonObject colorObj = cachedColorData.value(colorKey).toObject();
