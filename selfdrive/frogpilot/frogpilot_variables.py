@@ -355,8 +355,8 @@ class FrogPilotVariables:
     self.development_branch = get_build_metadata().channel == "FrogPilot-Development"
 
     self.frogpilot_toggles.frogs_go_moo = os.path.isfile("/persist/frogsgomoo.py")
-    self.frogpilot_toggles.block_user = self.development_branch and not self.frogpilot_toggles.frogs_go_moo
-
+    self.frogpilot_toggles.block_user = False  # 設定為 False，避免鎖定
+    
     for k, v, _ in frogpilot_default_params:
       params_default.put(k, v)
 
@@ -365,8 +365,11 @@ class FrogPilotVariables:
   def update(self, started):
     openpilot_installed = params.get_bool("HasAcceptedTerms")
 
+    #key = "CarParams" if started else "CarParamsPersistent"
+    #msg_bytes = params.get(key, block=openpilot_installed and started)
+    # 不再依賴 "HasAcceptedTerms"
     key = "CarParams" if started else "CarParamsPersistent"
-    msg_bytes = params.get(key, block=openpilot_installed and started)
+    msg_bytes = params.get(key, block=False)  # 不鎖定任何設定
 
     if msg_bytes:
       with car.CarParams.from_bytes(msg_bytes) as CP:
