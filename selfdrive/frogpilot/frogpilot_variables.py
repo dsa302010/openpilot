@@ -391,8 +391,9 @@ class FrogPilotVariables:
       max_acceleration_enabled = False
       openpilot_longitudinal = False
       pcm_cruise = False
-
-    tuning_level = params.get_int("TuningLevel") if params.get_bool("TuningLevelConfirmed") else 3
+      
+    tuning_level = 3
+    #tuning_level = params.get_int("TuningLevel") if params.get_bool("TuningLevelConfirmed") else 3
 
     default = params_default
     level = self.tuning_levels
