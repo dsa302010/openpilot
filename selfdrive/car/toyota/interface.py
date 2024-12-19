@@ -157,8 +157,8 @@ class CarInterface(CarInterfaceBase):
         ret.longitudinalActuatorDelay = 0.05
 
     if params.get_bool("FrogsGoMoosTweak"):
-      ret.stoppingDecelRate = 0.015  # reach stopping target smoothly
-      ret.vEgoStopping = 0.09
+      ret.stoppingDecelRate = 0.01  # reach stopping target smoothly
+      ret.vEgoStopping = 0.11
       ret.vEgoStarting = 0.15
 
     return ret
