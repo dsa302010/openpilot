@@ -146,6 +146,9 @@ class CarInterface(CarInterfaceBase):
     ret.minEnableSpeed = -1. if (candidate in STOP_AND_GO_CAR or ret.enableGasInterceptor) else MIN_ACC_SPEED
 
     if candidate in TSS2_CAR:
+      # on stock Toyota this is -2.5
+      ret.stopAccel = -0.4
+
       ret.flags |= ToyotaFlags.RAISED_ACCEL_LIMIT.value
 
       ret.vEgoStopping = 0.11
