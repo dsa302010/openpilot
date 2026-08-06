@@ -24,8 +24,8 @@ _ABORT_ENTERING_PRED_LAT_ACC_TH = 1.1  # Predicted Lat Acc threshold to abort en
 
 _TURNING_LAT_ACC_TH = 1.6  # Lat Acc threshold to trigger turning state.
 
-_LEAVING_LAT_ACC_TH = 1.3  # Lat Acc threshold to trigger leaving turn state.
-_FINISH_LAT_ACC_TH = 1.1  # Lat Acc threshold to trigger the end of the turn cycle.
+_LEAVING_LAT_ACC_TH = 1.5  # Lat Acc threshold to trigger leaving turn state.
+_FINISH_LAT_ACC_TH = 1.3  # Lat Acc threshold to trigger the end of the turn cycle.
 
 _A_LAT_REG_MAX = 2.  # Maximum lateral acceleration
 
@@ -33,15 +33,15 @@ _NO_OVERSHOOT_TIME_HORIZON = 4.  # s. Time to use for velocity desired based on 
 
 # Lookup table for the minimum smooth deceleration during the ENTERING state
 # depending on the actual maximum absolute lateral acceleration predicted on the turn ahead.
-_ENTERING_SMOOTH_DECEL_V = [-0.2, -1.]  # min decel value allowed on ENTERING state
-_ENTERING_SMOOTH_DECEL_BP = [1.3, 3.]  # absolute value of lat acc ahead
+_ENTERING_SMOOTH_DECEL_V = [-0.10, -0.5]  # min decel value allowed on ENTERING state
+_ENTERING_SMOOTH_DECEL_BP = [1.1, 3.]  # absolute value of lat acc ahead
 
 # Lookup table for the acceleration for the TURNING state
 # depending on the current lateral acceleration of the vehicle.
-_TURNING_ACC_V = [0.5, 0., -0.4]  # acc value
+_TURNING_ACC_V = [0.25, 0.10, -0.05]  # acc value
 _TURNING_ACC_BP = [1.5, 2.3, 3.]  # absolute value of current lat acc
 
-_LEAVING_ACC = 0.5  # Conformable acceleration to regain speed while leaving a turn.
+_LEAVING_ACC = 0.7  # Conformable acceleration to regain speed while leaving a turn.
 
 
 class SmartCruiseControlVision:
@@ -90,7 +90,7 @@ class SmartCruiseControlVision:
 
       # get the maximum lat accel from the model
       predicted_lat_accels = rate_plan * vel_plan
-      self.max_pred_lat_acc = np.percentile(predicted_lat_accels, 97)
+      self.max_pred_lat_acc = np.percentile(predicted_lat_accels, 95)
 
       # get the maximum curve based on the current velocity
       v_ego = max(self.v_ego, 0.1)  # ensure a value greater than 0 for calculations
