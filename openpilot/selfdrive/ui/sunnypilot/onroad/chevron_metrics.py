@@ -72,12 +72,6 @@ class ChevronMetrics:
         val *= 3.28084
       text_lines.append(f"{val:.0f} {unit}")
 
-    # Speed
-    if ui_state.chevron_metrics == ChevronOptions.SPEED_ONLY or ui_state.chevron_metrics == ChevronOptions.ALL:
-      multiplier = CV.MS_TO_KPH if ui_state.is_metric else CV.MS_TO_MPH
-      val = max(0.0, (v_rel + v_ego) * multiplier)
-      unit = tr("km/h") if ui_state.is_metric else tr("mph")
-      text_lines.append(f"{val:.0f} {unit}")
 
     # Time to collision
     if ui_state.chevron_metrics == ChevronOptions.TTC_ONLY or ui_state.chevron_metrics == ChevronOptions.ALL:
@@ -90,8 +84,8 @@ class ChevronMetrics:
   def _render_text_lines(self, text_lines: list[str], chevron_x: float, chevron_y: float,
                          sz: float, rect: rl.Rectangle):
     """Render text lines with proper centering and positioning"""
-    font_size = 40
-    line_height = 50
+    font_size = 48
+    line_height = 58
     margin = 20
 
     text_y = chevron_y + sz + 15
