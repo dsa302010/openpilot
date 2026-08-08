@@ -9,7 +9,7 @@ from enum import IntEnum
 import pyray as rl
 from openpilot.selfdrive.ui.ui_state import ui_state
 from openpilot.selfdrive.ui.sunnypilot.onroad.developer_ui.elements import (
-  UiElement, RelDistElement, RelSpeedElement, SteeringAngleElement,
+  UiElement, CpuTempElement, RelDistElement, RelSpeedElement, SteeringAngleElement,
   DesiredLateralAccelElement, ActualLateralAccelElement, DesiredSteeringAngleElement,
   AEgoElement, LeadSpeedElement, FrictionCoefficientElement, LatAccelFactorElement,
   SteeringTorqueEpsElement, BearingDegElement, AltitudeElement, DesiredSteeringPIDElement
@@ -41,6 +41,7 @@ class DeveloperUiRenderer(Widget):
 
     self.rel_dist_elem = RelDistElement()
     self.rel_speed_elem = RelSpeedElement()
+    self.cpu_temp_elem = CpuTempElement()
     self.steering_angle_elem = SteeringAngleElement()
     self.desired_lat_accel_elem = DesiredLateralAccelElement()
     self.actual_lat_accel_elem = ActualLateralAccelElement()
@@ -85,6 +86,7 @@ class DeveloperUiRenderer(Widget):
     elements = [
       self.rel_dist_elem.update(sm, ui_state.is_metric),
       self.rel_speed_elem.update(sm, ui_state.is_metric),
+      self.cpu_temp_elem.update(sm, ui_state.is_metric),
       self.steering_angle_elem.update(sm, ui_state.is_metric),
     ]
     if controls_state.lateralControlState.which() == 'torqueState':

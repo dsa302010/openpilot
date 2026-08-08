@@ -112,6 +112,30 @@ class RelSpeedElement(LeadInfoElement):
     return UiElement(value, tr("REL SPEED"), self.unit, color)
 
 
+class CpuTempElement:
+  def __init__(self):
+    self.unit = "°C"
+  @staticmethod
+  def _get_cpu_temperatures():
+    import glob
+    temps = []
+    for p in glob.glob("/sys/class/thermal/thermal_zone*/temp"):
+      try:
+        zone_type = open(p.replace("/temp", "/type")).read().strip().lower()
+        if zone_type.startswith("cpu") and zone_type.endswith("-usr"):
+          temps.append(int(open(p).read()) / 1000.0)
+      except (OSError, ValueError):
+        pass
+    return temps
+
+  def update(self, sm, is_metric: bool) -> UiElement:
+    temps = self._get_cpu_temperatures()
+    max_temp = max(temps, default=-1)
+    value = f"{max_temp:.0f}" if max_temp >= 0 else "-"
+    color = rl.RED if max_temp >= 80 else rl.Color(255, 188, 0, 255) if max_temp >= 70 else rl.WHITE
+    return UiElement(value, tr("CPU TEMP"), self.unit, color)
+
+
 class SteeringAngleElement(LateralControlElement):
   def __init__(self):
     self.unit = ""
