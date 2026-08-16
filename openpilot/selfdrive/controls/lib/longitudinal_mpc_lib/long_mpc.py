@@ -392,7 +392,8 @@ class LongitudinalMpc:
       return
 
     # 最後一道防線：前車接近停止且自車已低速時，
-    # 不讓 MPC 再規劃向前追車的 trajectory。
+    # 直接把 MPC 使用的主要前車 obstacle 壓到至少 3m，
+    # 同時視為低速前車，避免 MPC 因預測 trajectory 放掉煞車。
     lead_xv_0[:, 0] = np.minimum(lead_xv_0[:, 0], SAFETY_STOP_MIN_DISTANCE)
     lead_xv_0[:, 1] = np.minimum(lead_xv_0[:, 1], SAFETY_STOP_LEAD_SPEED)
 
@@ -486,6 +487,9 @@ class LongitudinalMpc:
 
     self.apply_safety_stop(lead_xv_0)
 
+    if self.safety_stop_active:
+      lead_0_obstacle = np.minimum(lead_0_obstacle, SAFETY_STOP_MIN_DISTANCE)
+
     # Fake an obstacle for cruise, this ensures smooth acceleration to set speed
     # when the leads are no factor.
     v_lower = v_ego + (T_IDXS * CRUISE_MIN_ACCEL * 1.05)
@@ -510,6 +514,7 @@ class LongitudinalMpc:
     self.params[:,5] = LEAD_DANGER_FACTOR
 
     if self.safety_stop_active:
+      # 不允許 MPC 在安全鎖定期間產生正加速度。
       self.params[:,1] = np.minimum(self.params[:,1], 0.0)
 
     # ============================================================
