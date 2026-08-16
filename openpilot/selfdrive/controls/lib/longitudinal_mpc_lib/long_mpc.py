@@ -80,11 +80,11 @@ LEAD_MIN_DECEL = [0.00, 0.05, 0.12, 0.20]
 # ============================================================
 # 前車極端急煞 / 接近靜止安全防護
 # ============================================================
-SAFETY_STOP_TRIGGER = 4.0
+SAFETY_STOP_TRIGGER = 5.0
 SAFETY_STOP_MIN_DISTANCE = 3.0
 SAFETY_STOP_RELEASE_DISTANCE = 6.0
-SAFETY_STOP_EGO_SPEED = 5.0 / 3.6
-SAFETY_STOP_LEAD_SPEED = 2.0 / 3.6
+SAFETY_STOP_EGO_SPEED = 25.0 / 3.6
+SAFETY_STOP_LEAD_SPEED = 3.0 / 3.6
 SAFETY_STOP_DECEL = -1.5
 
 
