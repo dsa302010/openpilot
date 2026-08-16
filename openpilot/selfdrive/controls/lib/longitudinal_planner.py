@@ -168,9 +168,9 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
         self.safety_stop_active = False
     elif (
       lead.present and
-      lead.dRel <= 4.0 and
-      sm['carState'].vEgo <= 5.0 / 3.6 and
-      lead.vLead <= 2.0 / 3.6
+      lead.dRel <= 5.0 and
+      sm['carState'].vEgo <= 25.0 / 3.6 and
+      lead.vLead <= 3.0 / 3.6
     ):
       self.safety_stop_active = True
 
