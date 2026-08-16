@@ -17,7 +17,7 @@ from openpilot.common.swaglog import cloudlog
 
 from openpilot.sunnypilot.selfdrive.controls.lib.longitudinal_planner import LongitudinalPlannerSP
 
-A_CRUISE_MAX_VALS = [1.15, 0.95, 0.45, 0.25]
+A_CRUISE_MAX_VALS = [2.0, 1.6, 0.8, 0.6]
 A_CRUISE_MAX_BP = [0., 10.0, 25., 40.]
 CONTROL_N_T_IDX = ModelConstants.T_IDXS[:CONTROL_N]
 ALLOW_THROTTLE_THRESHOLD = 0.4
@@ -149,6 +149,17 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
     else:
       output_a_target = output_a_target_mpc
       self.output_should_stop = output_should_stop_mpc
+
+    # Final close-lead safety guard: applied after ACC/E2E blending.
+    lead = sm['radarState'].leadOne
+    if (
+      lead.present and
+      lead.dRel <= 4.0 and
+      sm['carState'].vEgo <= 5.0 / 3.6 and
+      lead.vLead <= 2.0 / 3.6
+    ):
+      output_a_target = min(output_a_target, -1.5)
+      self.output_should_stop = True
 
     for idx in range(2):
       accel_clip[idx] = np.clip(accel_clip[idx], self.prev_accel_clip[idx] - 0.05, self.prev_accel_clip[idx] + 0.05)
