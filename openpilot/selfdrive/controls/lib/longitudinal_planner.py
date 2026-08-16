@@ -61,6 +61,7 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
     self.prev_accel_clip = [ACCEL_MIN, ACCEL_MAX]
     self.output_a_target = 0.0
     self.output_should_stop = False
+    self.safety_stop_active = False
 
     self.v_desired_trajectory = np.zeros(CONTROL_N)
     self.a_desired_trajectory = np.zeros(CONTROL_N)
@@ -86,6 +87,9 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
     reset_state = long_control_off if self.CP.openpilotLongitudinalControl else not sm['selfdriveState'].enabled
     # PCM cruise speed may be updated a few cycles later, check if initialized
     reset_state = reset_state or not v_cruise_initialized
+
+    if reset_state:
+      self.safety_stop_active = False
 
     # No change cost when user is controlling the speed, or when standstill
     prev_accel_constraint = not (reset_state or sm['carState'].standstill)
@@ -151,18 +155,33 @@ class LongitudinalPlanner(LongitudinalPlannerSP):
       self.output_should_stop = output_should_stop_mpc
 
     # Final close-lead safety guard: applied after ACC/E2E blending.
+    # 4m triggers, 6m releases (hysteresis), and a moving lead can release
+    # the lock early. This is the final E2E/ACC safety layer.
     lead = sm['radarState'].leadOne
-    if (
+
+    if self.safety_stop_active:
+      if (
+        not lead.present or
+        lead.dRel >= 6.0 or
+        lead.vLead > (2.0 / 3.6) * 1.5
+      ):
+        self.safety_stop_active = False
+    elif (
       lead.present and
       lead.dRel <= 4.0 and
       sm['carState'].vEgo <= 5.0 / 3.6 and
       lead.vLead <= 2.0 / 3.6
     ):
+      self.safety_stop_active = True
+
+    if self.safety_stop_active:
       output_a_target = min(output_a_target, -1.5)
       self.output_should_stop = True
 
-    for idx in range(2):
-      accel_clip[idx] = np.clip(accel_clip[idx], self.prev_accel_clip[idx] - 0.05, self.prev_accel_clip[idx] + 0.05)
+    if not self.safety_stop_active:
+      for idx in range(2):
+        accel_clip[idx] = np.clip(accel_clip[idx], self.prev_accel_clip[idx] - 0.05, self.prev_accel_clip[idx] + 0.05)
+
     self.output_a_target = np.clip(output_a_target, accel_clip[0], accel_clip[1])
     self.prev_accel_clip = accel_clip
 
