@@ -414,8 +414,8 @@ class LongitudinalMpc:
     # To estimate a safe distance from a moving lead, we calculate how much stopping
     # distance that lead needs as a minimum. We can add that to the current distance
     # and then treat that as a stopped car/obstacle at this new distance.
-    lead_stop_offset_0 = np.where(lead_xv_0[:,1] < 1.0, 1.0, 0.0)
-    lead_stop_offset_1 = np.where(lead_xv_1[:,1] < 1.0, 1.0, 0.0)
+    lead_stop_offset_0 = np.where(lead_xv_0[:,1] < 1.0, 0.5, 0.0)
+    lead_stop_offset_1 = np.where(lead_xv_1[:,1] < 1.0, 0.5, 0.0)
 
     lead_0_obstacle = (
       lead_xv_0[:,0]
